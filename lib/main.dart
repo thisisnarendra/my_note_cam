@@ -192,78 +192,76 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Watermark Settings'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Latitude:'),
-                TextFormField(
-                  controller: _latitudeController,
-                  keyboardType: TextInputType.number,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Latitude:'),
+              TextFormField(
+                controller: _latitudeController,
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 10),
+              const Text('Longitude:'),
+              TextFormField(
+                controller: _longitudeController,
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 10),
+              const Text('Note:'),
+              TextFormField(
+                controller: _customNoteController,
+                keyboardType: TextInputType.text,
+              ),
+              const SizedBox(height: 10),
+              const Text('Date:'),
+              InkWell(
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: _selectedDateTime,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null) {
+                    setState(() {
+                      _selectedDateTime = pickedDate;
+                    });
+                  }
+                },
+                child: Row(
+                  children: [
+                    const Icon(Icons.calendar_today),
+                    const SizedBox(width: 10),
+                    Text(
+                      '${_selectedDateTime.day}/${_selectedDateTime.month}/${_selectedDateTime.year}',
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                const Text('Longitude:'),
-                TextFormField(
-                  controller: _longitudeController,
-                  keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 10),
+              const Text('Time:'),
+              InkWell(
+                onTap: () async {
+                  TimeOfDay? pickedTime = await showTimePicker(
+                      context: context, initialTime: TimeOfDay.now());
+                  if (pickedTime != null) {
+                    setState(() {
+                      _selectedTime = pickedTime;
+                    });
+                  }
+                },
+                child: Row(
+                  children: [
+                    const Icon(Icons.calendar_today),
+                    const SizedBox(width: 10),
+                    Text(
+                      '${_selectedTime.hour} : ${_selectedTime.minute}',
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                const Text('Note:'),
-                TextFormField(
-                  controller: _customNoteController,
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 10),
-                const Text('Date:'),
-                InkWell(
-                  onTap: () async {
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: _selectedDateTime,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                    );
-                    if (pickedDate != null) {
-                      setState(() {
-                        _selectedDateTime = pickedDate;
-                      });
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(Icons.calendar_today),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${_selectedDateTime.day}/${_selectedDateTime.month}/${_selectedDateTime.year}',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text('Time:'),
-                InkWell(
-                  onTap: () async {
-                    TimeOfDay? pickedTime = await showTimePicker(
-                        context: context, initialTime: TimeOfDay.now());
-                    if (pickedTime != null) {
-                      setState(() {
-                        _selectedTime = pickedTime;
-                      });
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(Icons.calendar_today),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${_selectedTime.hour} : ${_selectedTime.minute}',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
           actions: [
             ElevatedButton(
